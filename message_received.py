@@ -116,8 +116,8 @@ def incoming_sms_status():
     # of the message that prompted this action
     message_sid = request.values.get('MessageSid', None)
 
-    account_sid = "AC05c492100ba229f40bd463f0c99da9b2"
-    auth_token = "bf7c0153a0a3ff0dc7fa2ad5e0b532be"
+    account_sid = "ACCOUNT_SID"
+    auth_token = "AUTH_TOKEN"
 
     client = Client(account_sid, auth_token)
     client.message()
