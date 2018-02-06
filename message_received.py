@@ -25,6 +25,8 @@ import re   # using regex for remove function
 import logging
 import requests
 
+logging.basicConfig(level=logging.INFO)
+
 app = Flask(__name__)
 
 todolist = []   # store list items
@@ -109,18 +111,13 @@ def removeHead(fromThis, removeThis):
     return fromThis
 
 @app.route('/status', methods=['POST'])
-def incoming_sms_status():
-    unique_id = request.values.get('id', None)
-
-    # Use a unique id associated with your user to figure out the Message Sid
-    # of the message that prompted this action
+def sms_status():
     message_sid = request.values.get('MessageSid', None)
+    message_status = request.values.get('MessageStatus', None)
+    header_xTwilioSignature = request.header.get('X-Twilio-Signature', None)
+    logging.info('SID: {}, Status: {}, X-Twilio-Signature: {}'.format(message_sid, message_status, header_xTwilioSignature))
 
-    account_sid = "ACCOUNT_SID"
-    auth_token = "AUTH_TOKEN"
-
-    client = Client(account_sid, auth_token)
-    client.message()
+    print('SID: {}, Status: {}, X-Twilio-Signature: {}'.format(message_sid, message_status, header_xTwilioSignature))
 
 if __name__ == "__main__":
     app.run(debug=True)
